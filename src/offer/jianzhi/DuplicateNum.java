@@ -614,3 +614,64 @@ class RobotMove {
 		return r % 10 + r / 10 % 10 + c % 10 + c / 10 % 10;
 	}
 }
+
+/* 剪绳子
+ * 把一根绳子剪成多段，并且使得剪成绳子的长度乘积最大。
+ */
+
+// 贪心
+class CutRope {
+	public int integerBreak(int n) {
+		if (n == 2) {
+			return 1;
+		}
+		if (n == 3)
+			return 2;
+		int threes, b;
+		threes = n / 3;
+		b = n % 3;
+		if (b == 0) {
+			return (int) Math.pow(3, threes);
+		} else if (b == 1) {
+			return (int) Math.pow(3, threes - 1) * 4;
+		} else {
+			return (int) Math.pow(3, threes) * 2;
+		}
+	}
+}
+
+// 动态规划
+class CutRope1 {
+	public int integerBreak(int n) {
+		int[] dp = new int[n + 1];
+		dp[2] = 1;
+		dp[3] = 2;
+		for (int i = 4; i < n + 1; i++) {
+			for (int j = 1; j < i; j++) {
+				dp[i] = Math.max(dp[j] * (i - j), dp[i] * dp[i - j]);
+			}
+		}
+		return dp[n];
+	}
+}
+
+/* 二进制中 1 的个数
+ * 输入一个整数，输出该数的二进制表示中 1 的个数。负数首位为1
+ */
+
+// n&(n-1)
+// 该位运算可以去除 n 的二进制表示中最低的那一位1
+// n       : 10110100
+// n-1     : 10110011
+// n&(n-1) : 10110000
+
+class CountNumberOf1 {
+	public int NumberOf1(int n) {
+		int count = 0;
+		while (n != 0) {
+			count++;
+			n &= (n - 1);
+		}
+		return count;
+	}
+}
