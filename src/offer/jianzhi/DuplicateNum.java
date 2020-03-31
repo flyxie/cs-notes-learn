@@ -675,3 +675,84 @@ class CountNumberOf1 {
 		return count;
 	}
 }
+
+/*
+ * 
+ */
+class NumberPow {
+	public double Power(double base, int exponent) {
+		if (exponent == 0)
+			return 1;
+		if (exponent == 1)
+			return base;
+		boolean flag = false;
+		if (exponent < 0) {
+			flag = true;
+			exponent = -exponent;
+		}
+		double result;
+		if (exponent % 2 == 0) {
+			result = Power(base * base, exponent / 2);
+		} else {
+			result = base * Power(base * base, exponent / 2);
+		}
+		if (flag == false)
+			return result;
+		else
+			return 1 / result;
+
+	}
+}
+
+class DeleteNode {
+	public ListNode deleteNode(ListNode head, ListNode tobeDelete) {
+		if (head == null || tobeDelete == null)
+			return null;
+		if (tobeDelete.next != null) {
+			tobeDelete.val = tobeDelete.next.val;
+			tobeDelete.next = tobeDelete.next.next;
+		} else {
+			if (head == tobeDelete)
+				head = null;
+			else {
+				ListNode temp = head;
+				while (temp.next != tobeDelete) {
+					temp = temp.next;
+				}
+				temp.next = null;
+			}
+		}
+		return head;
+
+	}
+}
+
+class DeleteDuplicationNode {
+	public ListNode deleteDuplication(ListNode pHead) {
+		if (pHead == null)
+			return null;
+		if (pHead.next == null) {
+			return pHead;
+		}
+		if (pHead.next.val == pHead.val || pHead.next.next == null) {
+			return null;
+		}
+		if (pHead.next.val != pHead.val || pHead.next.next == null) {
+			return pHead;
+		}
+		ListNode start = pHead;
+		while (start.next != null) {
+			while (start.next.val != start.next.next.val) {
+				start = start.next;
+			}
+			ListNode temp = start.next;
+			while (temp.val == temp.next.val) {
+				temp = temp.next;
+			}
+//			start.next.val = temp.next.val;
+			start.next = temp.next;
+		}
+		return pHead;
+
+	}
+}
